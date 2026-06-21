@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Matcher</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .score {
+            font-size: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<h2>🚀 AI Resume Screening System</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    <input type="file" name="resume" multiple required><br><br>
+
+    <textarea name="job_desc" rows="5" cols="50" placeholder="Enter Job Description" required></textarea><br><br>
+
+    <button type="submit">Analyze Resume</button>
+</form>
+
+{% if results %}
+
+    {% for r in results %}
+        <div class="card">
+            <h3>{{ r.filename }}</h3>
+            <p class="score">Match Score: {{ r.score }}%</p>
+
+            <p><b>Skills:</b> {{ r.resume_skills }}</p>
+            <p style="color:red;"><b>Missing:</b> {{ r.missing_skills }}</p>
+            <p><b>💡 Suggestions:</b></p>
+            <ul>
+                {% for s in r.suggestions %}
+                    <li>{{ s }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+{% endif %}
+
+</body>
+</html>
